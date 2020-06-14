@@ -1,3 +1,4 @@
+const express = require("express");
 const fs = require("fs");
 var jwt = require("jsonwebtoken");
 var privateKey = fs.readFileSync("private.pem");
@@ -28,4 +29,18 @@ jwt.verify(token, cert, function (err, decoded) {
   }
 });
 
-console.log("token", token);
+// Constants
+const PORT = 3000;
+const HOST = "0.0.0.0";
+
+// App
+const app = express();
+app.get("/", (req, res) => {
+  res.send(`Token ${token}`);
+});
+
+var port = process.env.PORT || PORT;
+app.listen(port);
+
+//console.log("token", token);
+//console.log(`Running on http://${HOST}:${PORT}`);
